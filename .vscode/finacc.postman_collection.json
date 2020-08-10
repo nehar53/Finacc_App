@@ -1,0 +1,158 @@
+{
+	"info": {
+		"_postman_id": "1a72cf19-51df-4d74-9293-392a09ae9d7d",
+		"name": "finacc",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Post Party Master",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  {\r\n    \"_id\": \"partyMst\",\r\n    \"partyMobileNo\":\"+919988887513\",\r\n    \"partyName\": \"Saniya\",\r\n    \"partyType\":\"Customer\",\r\n    \"partyEmail\":\"saniya@mail.com\",\r\n    \"partyBillingAddress\":\"1130, secotr 79, mohali\",\r\n    \"partyGSTTYpe\":\"Unregistered/Consumer\",\r\n    \"partyState\":\"Punjab\",\r\n    \"partyStateCode\":\"PB\",\r\n    \"partyOpeningBalance\":0.00,\r\n    \"partyGSTINNo\":\"\",\r\n    \"openingBalAsOn\":1596006692 \r\n    \r\n  }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://164.52.197.189:8181/fdb/finacc/gendata/transact",
+					"protocol": "http",
+					"host": [
+						"164",
+						"52",
+						"197",
+						"189"
+					],
+					"port": "8181",
+					"path": [
+						"fdb",
+						"finacc",
+						"gendata",
+						"transact"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Item MAster",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  {\r\n    \"_id\": \"itemMaster\",\r\n    \"itemName\": \"Haldiram Nut Cracker\",\r\n    \"UOMPrimary\":\"CARTONS\",\r\n    \"UOMSecondary\":\"PACKETS\",\r\n    \"convRate\":\"20\",\r\n    \"ItemCodeBarcode\":\"A10394040499GGG\",\r\n    \"HSNCode\":\"SS333838D\",\r\n    \"salePrice\":0.00,\r\n    \"purPrice\":0.00,\r\n    \"taxRate\":0.00,\r\n    \"openingStockQty\":0.00,\r\n    \"openingStockAsOn\":1596008666,\r\n    \"minStockQty\":0.00,\r\n    \"itemLocation\":\"\",\r\n    \"salesTaxIncluded\":true,\r\n    \"purTaxIncluded\":false\r\n  }\r\n     \r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://164.52.197.189:8181/fdb/finacc/gendata/transact",
+					"protocol": "http",
+					"host": [
+						"164",
+						"52",
+						"197",
+						"189"
+					],
+					"port": "8181",
+					"path": [
+						"fdb",
+						"finacc",
+						"gendata",
+						"transact"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Items",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"select\": [\"*\"],\r\n  \"from\": \"itemMaster\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://164.52.197.189:8181/fdb/finacc/gendata/query",
+					"protocol": "http",
+					"host": [
+						"164",
+						"52",
+						"197",
+						"189"
+					],
+					"port": "8181",
+					"path": [
+						"fdb",
+						"finacc",
+						"gendata",
+						"query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Party",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"select\": [\"*\"],\r\n  \"from\": \"partyMst\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://164.52.197.189:8181/fdb/finacc/gendata/query",
+					"protocol": "http",
+					"host": [
+						"164",
+						"52",
+						"197",
+						"189"
+					],
+					"port": "8181",
+					"path": [
+						"fdb",
+						"finacc",
+						"gendata",
+						"query"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -1,0 +1,17 @@
+[
+	{
+	  "_id": "partyMst",
+	  "partyMobileNo":"+919988887513",
+	  "partyName": "Saniya",
+	  "partyType":"Customer",
+	  "partyEmail":"saniya@mail.com",
+	  "partyBillingAddress":"1130, secotr 79, mohali",
+	  "partyGSTTYpe":"Unregistered/Consumer",
+	  "partyState":"Punjab",
+	  "partyStateCode":"PB",
+	  "partyOpeningBalance":0.00,
+	  "partyGSTINNo":"",
+	  "openingBalAsOn":1596006692 
+	  
+	}
+  ]
