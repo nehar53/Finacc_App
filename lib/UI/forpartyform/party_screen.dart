@@ -15,39 +15,41 @@ class FormScreen extends StatefulWidget {
 }
 
 class FormScreenState extends State<FormScreen> {
-  Future<void> fetchParty() async {
-    String url = 'http://164.52.197.189:8181/fdb/finacc/gendata/transact';
-    Map<String, String> headers = {
-      "Postman-Token": "<calculated when request is sent>",
-      "Content-Type": "application/json",
-      "Content-Length": "<calculated when request is sent>",
-      " Host": "<calculated when request is sent>",
-      "User-Agent": "PostmanRuntime/7.26.2",
-      "Accept": "*",
-      "Accept-Encoding": "gzip, deflate, br",
-      "Connection": "keep-alive",
-      /* "_id": "partyMst",
-      "partyMobileNo": "+919988887513",
-      "partyName": "Saniya",
-      "partyType": "Customer",
-      "partyEmail": "saniya@mail.com",
-      "partyBillingAddress": "1130, secotr 79, mohali",
-      "partyGSTTYpe": "Unregistered/Consumer",
-      "partyState": "Punjab",
-      "partyStateCode": "PB",
-      "partyOpeningBalance": "0.00",
-      "partyGSTINNo": "",
-      "openingBalAsOn": '1596006692'*/
+  Future<void> getApiResults() async {
+    var url = "http://164.52.197.189:8181/fdb/finacc/gendata/query";
+    Map<String, dynamic> tempMap = {
+      "select": ["*"],
+      "from": "partyMst"
     };
+    var query = json.encode(tempMap);
+    var resp = await http.post(url, body: query);
+    var res = json.decode(resp.body.toString());
+    for (var Party in res) {
+      var newParty = Party();
 
-    http.Response response = await http.post(url, headers: headers);
+      newParty.partyMobileNo = Party["PartyMst/partyMobileNo"].toInt();
 
-    int statusCode = response.statusCode;
-    print('This is the statuscode: $statusCode');
-    final responseJson = json.decode(response.body);
-    print(responseJson);
+      newParty.partyName = Party["PartyMst/partyName"].toString();
+      newParty.partyType = Party["PartyMst/partyType"].toString();
+      // newParty.partyName = Party["PartyMst/partyName"].toString();
+      newParty.partyEmail = Party["PartyMst/ partyEmail"].toString();
+      newParty.partyBillingAddress =
+          Party["PartyMst/partyBillingAddress"].toString();
+      newParty.partyState = Party["PartyMst/ partyState"].toString();
+      newParty.partyGSTTYpe = Party["PartyMst/ partyGSTTYpe"].toString();
 
-    //print('This is the API response: $responseJson');
+      newParty.partyMobileNo = Party["PartyMst/partyMobileNo"].toInt();
+      newParty.partyStateCode = Party["PartyMst/partyStateCode"].toInt();
+      newParty.partyOpeningBalance =
+          Party["PartyMst/partyOpeningBalance"].toInt();
+      newParty.openingBalAsOn = Party["PartyMst/openingBalAsOn"].toInt();
+      newParty.id = Party["PartyMst/_id"];
+      newParty.partyGSTINNo = Party["PartyMst/partyGSTINNo"].toInt();
+      newParty.partyOpeningBalance =
+          Party["PartyMst/partyOpeningBalance"].toInt();
+
+      //new.add(newParty);
+    }
   }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -194,7 +196,7 @@ class FormScreenState extends State<FormScreen> {
                     'SAVE',
                     style: TextStyle(color: Colors.deepOrange, fontSize: 16),
                   ),
-                  onPressed: fetchParty
+                  onPressed: getApiResults
 
                   /*  print(_name);
                   print(_email);
@@ -209,6 +211,39 @@ class FormScreenState extends State<FormScreen> {
       ),
     );
   }
+}
+
+class Party {
+  String partyName,
+      partyType,
+      partyEmail,
+      partyBillingAddress,
+      partyGSTTYpe,
+      id,
+      partyState;
+  int partyMobileNo,
+      partyStateCode,
+      partyOpeningBalance,
+      partyGSTINNo,
+      openingBalAsOn;
+
+  Party({
+    this.partyMobileNo,
+    this.partyName,
+    this.partyType,
+    this.partyEmail,
+    this.partyBillingAddress,
+    this.partyGSTTYpe,
+    this.partyState,
+    this.partyStateCode,
+    this.partyOpeningBalance,
+    //this.openingBalAsOn,
+    this.id,
+    this.partyGSTINNo,
+    //this.partyOpeningBalance,
+    this.openingBalAsOn,
+    //  this.salesTaxIncluded
+  });
 }
 
 class NestedTabBar extends StatefulWidget {

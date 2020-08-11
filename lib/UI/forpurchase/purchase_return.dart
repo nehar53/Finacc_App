@@ -13,7 +13,7 @@ class PurchaseScreenState extends State<PurchaseScreen> {
   String _party;
   String _billdate;
   // DateTime _dateTime;
-  DateTime _dateTime;
+
   String dropdownValue = 'Cash(payment type)';
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -36,6 +36,23 @@ class PurchaseScreenState extends State<PurchaseScreen> {
   }
 
   Widget _buildbilldate() {
+    return TextFormField(
+      decoration: InputDecoration(labelText: 'Party*'),
+      //maxLength: 10,
+      validator: (String value) {
+        if (value.isEmpty) {
+          // return ' Required';
+        }
+
+        return null;
+      },
+      onSaved: (String value) {
+        _party = value;
+      },
+    );
+  }
+
+  /* Widget _buildbilldate() {
     return InkWell(
       onTap: () {
         showDatePicker(
@@ -64,7 +81,7 @@ class PurchaseScreenState extends State<PurchaseScreen> {
         ),
       ),
     );
-  }
+  }*/
 
   Widget _buildbillno() {
     return TextFormField(

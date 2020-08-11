@@ -34,6 +34,23 @@ class SaleScreenState extends State<SaleScreen> {
   }
 
   Widget _buildinvoicedate() {
+    return TextFormField(
+      decoration: InputDecoration(labelText: 'Invoice Date'),
+      //maxLength: 10,
+      validator: (String value) {
+        if (value.isEmpty) {
+          // return ' Required';
+        }
+
+        return null;
+      },
+      onSaved: (String value) {
+        _party = value;
+      },
+    );
+  }
+
+  /*Widget _buildinvoicedate() {
     return InkWell(
       onTap: () {
         showDatePicker(
@@ -62,7 +79,7 @@ class SaleScreenState extends State<SaleScreen> {
         ),
       ),
     );
-  }
+  }*/
 
   Widget _buildbinvoiceno() {
     return TextFormField(

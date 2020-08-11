@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:flutter/widgets.dart';
+import 'dart:async';
 
 class DebitNote extends StatefulWidget {
   @override
@@ -17,7 +18,7 @@ class PurchaseScreenState extends State<DebitNote> {
   DateTime _dateTime;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  Widget _buildbilldate() {
+  /* Widget _buildbilldate() {
     return InkWell(
       onTap: () {
         showDatePicker(
@@ -46,11 +47,27 @@ class PurchaseScreenState extends State<DebitNote> {
         ),
       ),
     );
-  }
-
+  }*/
   Widget _buildparty() {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Party*'),
+      //maxLength: 10,
+      validator: (String value) {
+        if (value.isEmpty) {
+          // return ' Required';
+        }
+
+        return null;
+      },
+      onSaved: (String value) {
+        _party = value;
+      },
+    );
+  }
+
+  Widget _buildbilldate() {
+    return TextFormField(
+      decoration: InputDecoration(labelText: 'Bill Date'),
       //maxLength: 10,
       validator: (String value) {
         if (value.isEmpty) {
