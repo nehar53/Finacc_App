@@ -1,747 +1,330 @@
 import 'package:flutter/material.dart';
 //import './purchase_order.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-class PurchaseScreen extends StatefulWidget {
+class PurchaseScreen extends StatelessWidget {
   @override
-  State<StatefulWidget> createState() {
-    return PurchaseScreenState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(" Purchase Return "),
+        actions: [Icon(Icons.settings)],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext Context) => creditNote(),
+              ));
+        },
+        icon: Icon(Icons.add),
+        label: Text(" Add  Purchase Return "),
+        backgroundColor: Colors.tealAccent,
+      ),
+    );
   }
 }
 
-class PurchaseScreenState extends State<PurchaseScreen> {
-  String _party;
-  String _billdate;
-  // DateTime _dateTime;
+class creditNote extends StatefulWidget {
+  creditNote({Key key}) : super(key: key);
+  @override
+  _creditNoteState createState() => _creditNoteState();
+}
 
-  String dropdownValue = 'Cash(payment type)';
-
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  Widget _buildparty() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Party*'),
-      //maxLength: 10,
-      validator: (String value) {
-        if (value.isEmpty) {
-          // return ' Required';
-        }
-
-        return null;
-      },
-      onSaved: (String value) {
-        _party = value;
-      },
-    );
-  }
-
-  Widget _buildbilldate() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Party*'),
-      //maxLength: 10,
-      validator: (String value) {
-        if (value.isEmpty) {
-          // return ' Required';
-        }
-
-        return null;
-      },
-      onSaved: (String value) {
-        _party = value;
-      },
-    );
-  }
-
-  /* Widget _buildbilldate() {
-    return InkWell(
-      onTap: () {
-        showDatePicker(
-                context: context,
-                initialDate: _dateTime == null ? DateTime.now() : _dateTime,
-                firstDate: DateTime(2001),
-                lastDate: DateTime(2021))
-            .then((date) {
-          setState(() {
-            _dateTime = date;
-          });
-        });
-      },
-      // decoration: InputDecoration(labelText: 'Party*'),
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Row(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(left: 10, top: 10, bottom: 10),
-              child: Icon(Icons.calendar_today, color: Colors.black),
-            ),
-            Text('Bill Date', style: TextStyle(fontSize: 20)),
-            //Icon(Icons., color: Colors.black)
-          ],
-        ),
-      ),
-    );
-  }*/
-
-  Widget _buildbillno() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Bill No.'),
-      //maxLength: 10,
-      //Padding:(),
-
-      validator: (String value) {
-        if (value.isEmpty) {
-          // return ' Required';
-        }
-
-        return null;
-      },
-      onSaved: (String value) {
-        _billdate = value;
-      },
-    );
-  }
-
-  Widget _buildtotalamount() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'ToTal Amt'),
-      //maxLength: 10,
-      //Padding:(),
-
-      validator: (String value) {
-        if (value.isEmpty) {
-          // return ' Required';
-        }
-
-        return null;
-      },
-      onSaved: (String value) {
-        _billdate = value;
-      },
-    );
-  }
-
-  Widget _buildrecieved() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Received'),
-      //maxLength: 10,
-      //Padding:(),
-
-      validator: (String value) {
-        if (value.isEmpty) {
-          // return ' Required';
-        }
-
-        return null;
-      },
-      onSaved: (String value) {
-        _billdate = value;
-      },
-    );
-  }
-
-  /*Widget dropdownButton() {
-    return DropdownButton<String>(
-      value: dropdownValue,
-      icon: Icon(Icons.arrow_downward),
-      iconSize: 24,
-      elevation: 16,
-      style: TextStyle(color: Colors.black),
-      underline: Container(
-        height: 2,
-        color: Colors.deepPurpleAccent,
-      ),
-      onChanged: (String newValue) {
-        setState(() {
-          dropdownValue = newValue;
-        });
-      },
-      items: <String>['One', 'Two', 'Free', 'Four']
-          .map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-    );
-  }*/
-
-  Widget _buildbalancedue() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Balance Due'),
-      //maxLength: 10,
-      //Padding:(),
-
-      validator: (String value) {
-        if (value.isEmpty) {
-          // return ' Required';
-        }
-
-        return null;
-      },
-      onSaved: (String value) {
-        _billdate = value;
-      },
-    );
-  }
-
-  Widget _submitButton() {
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => BillScreen()));
-      },
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.symmetric(vertical: 11),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(5)),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                color: Color(0xffdf8e33),
-                offset: Offset(0, 0),
-                blurRadius: 0,
-                // spreadRadius: 0)
-              )
-            ],
-            color: Colors.white),
-        child: Text(
-          'Add Item(optional)',
-          style: TextStyle(fontSize: 20, color: Color(0xfff7892b)),
-        ),
-      ),
-    );
-  }
-
-  Widget _title() {
-    return RichText(
-      textAlign: TextAlign.center,
-      text: TextSpan(
-          text: 'Purch',
-          style: GoogleFonts.portLligatSans(
-            textStyle: Theme.of(context).textTheme.display1,
-            fontSize: 30,
-            fontWeight: FontWeight.w700,
-            color: Colors.white,
-          ),
-          children: [
-            TextSpan(
-              text: 'ase ',
-              style: TextStyle(color: Colors.white, fontSize: 30),
-            ),
-            TextSpan(
-              text: 'Return',
-              style: TextStyle(color: Colors.white, fontSize: 30),
-            ),
-          ]),
-    );
-  }
-
-  Widget _backButton() {
-    return InkWell(
-      onTap: () {
-        Navigator.pop(context);
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Row(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
-              child: Icon(Icons.keyboard_arrow_left, color: Colors.black),
-            ),
-            Text('Back',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500))
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _dropButton() {
-    return InkWell(
-      onTap: () {
-        //  Navigator.pop(context);
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Row(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
-              //child: Icon(Icons.arrow_drop_down, color: Colors.black),
-            ),
-            Text('Cash',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
-            Icon(Icons.arrow_drop_down, color: Colors.black),
-            Text('(Payment Type)',
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500))
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _adddescription() {
-    return InkWell(
-      onTap: () {
-        //  Navigator.pop(context);
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Row(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(left: 0, top: 0, bottom: 0),
-              child: Icon(Icons.library_add, color: Colors.black),
-            ),
-            Text('Add Description',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500))
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _cameraButton() {
-    return InkWell(
-      onTap: () {
-        //  Navigator.pop(context);
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        child: Row(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(right: 200, top: 10, bottom: 0),
-              //child: Icon(Icons.photo_camera, color: Colors.black),
-            ),
-            Text('Camera',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
-            Icon(Icons.photo_camera, color: Colors.black),
-          ],
-        ),
-      ),
-    );
-  }
-
-  /* @override
+class _creditNoteState extends State<creditNote> {
+  String dropdownValue = 'Cash';
+  @override
   Widget build(BuildContext context) {
+    var _amt;
+    double _rAmount;
+    double _amount;
+    TextEditingController controller = TextEditingController();
     return Scaffold(
-      // appBar: AppBar(title: Text("Form Demo")),
+      appBar:
+          //PreferredSize(
+          //preferredSize: Size.fromHeight(100.0),
+          //child:
+          AppBar(
+        title: Text(" Debit Note "),
+        actions: [
+          Icon(Icons.settings),
+//            Row(
+//              children: <Widget>[
+//                TextFormField(
+//
+//                  decoration: InputDecoration(
+//                    labelText: "Return No.",
+//                    fillColor: Colors.white
+//                  ),
+//                  validator: (value){
+//                    if(value.length == 0){
+//                      return "Cannot be Empty";
+//                    }
+//                    else{
+//                      return null;
+//                    }
+//
+//                  },
+//                )
+//              ],
+//            )
+        ],
+      ),
       body: Container(
-        
-        margin: EdgeInsets.all(24),
-        
-        child: Form(
-          key: _formKey,
+        padding: EdgeInsets.all(8.0),
+        child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              _title(),
-              _buildparty(),
-              _buildbilldate(),
-              SizedBox(
-                height: 5,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(children: <Widget>[
+                  SizedBox(
+                    //height: 100.0,
+                    width: 100.0,
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: "Party*",
+                        fillColor: Colors.black,
+//                            border: OutlineInputBorder(
+//                              borderRadius: BorderRadius.circular(15.0),
+//                              borderSide: BorderSide(),
+                        // ),
+                      ),
+                      validator: (value) {
+                        if (value.length == 0) {
+                          return "Cannot be Empty";
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+                  ),
+//                      SizedBox(height: 75.0,
+//                        width: 200.0,
+//                      child:
+                  Padding(
+                    padding: const EdgeInsets.only(left: 180.0),
+                    child: Icon(
+                      Icons.calendar_today,
+                      size: 40.0,
+                    ),
+                  )
+                  // ,)
+                ]),
               ),
-              _submitButton(),
 
-              //_buildbilldate(),
-              SizedBox(height: 300),
-              RaisedButton(
-                child: Text(
-                  'SAVE',
-                  style: TextStyle(color: Colors.blue, fontSize: 16),
+              //Divider(height:2.5,color: Colors.grey,thickness: 10 ),
+
+              SizedBox(
+                height: 75.0,
+                //width: 200.0,
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: "Party*",
+                    fillColor: Colors.black,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                      borderSide: BorderSide(),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value.length == 0) {
+                      return "Cannot be Empty";
+                    } else {
+                      return null;
+                    }
+                  },
                 ),
-                onPressed: () {
-                  if (!_formKey.currentState.validate()) {
-                    return;
-                  }
-
-                  _formKey.currentState.save();
-
-                  print(_billdate);
-                  print(_party);
-
-                  //Send to API
-                },
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}*/
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                    color: Colors.grey.shade200,
-                    offset: Offset(2, 4),
-                    blurRadius: 5,
-                    spreadRadius: 2)
-              ],
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Color(0xfffbb448), Color(0xffe46b10)])),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              _backButton(),
-              _title(),
-
-              SizedBox(
-                height: 1,
               ),
-              _buildparty(),
-              SizedBox(
-                height: 1,
-              ),
-              _buildbilldate(),
-              SizedBox(
-                height: 1,
-              ),
-              _buildbillno(),
-              SizedBox(
-                height: 10,
-              ),
-              _submitButton(),
-              // _backButton(),
-              SizedBox(
-                height: 1,
-              ),
-              _buildtotalamount(),
-              SizedBox(
-                height: 1,
-              ),
-              _buildrecieved(),
-              SizedBox(
-                height: 1,
-              ),
-              _buildbalancedue(),
-              SizedBox(
-                height: 1,
-              ),
-              _dropButton(),
-
-              SizedBox(
-                height: 1,
-              ),
-              Positioned(bottom: 40, left: 100, child: _cameraButton()),
-              SizedBox(
-                height: 1,
-              ),
-
-              Positioned(top: 40, right: 100, child: _adddescription()),
-              //SizedBox(height: 100),
-              RaisedButton(
-                  child: Text(
-                    'SAVE',
-                    style: TextStyle(color: Colors.blue, fontSize: 16),
+              Row(
+                children: <Widget>[
+                  SizedBox(
+                    height: 100.0,
+                    width: 150.0,
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        suffixIcon: Icon(Icons.calendar_today),
+                        labelText: "Bill. Date ",
+                        fillColor: Colors.black,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                          borderSide: BorderSide(),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value.length == 0) {
+                          return "Cannot be Empty";
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
                   ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                PurchaseScreen()));
-                    _formKey.currentState.save();
-
-                    print(_billdate);
-                    print(_party);
-                  })
-            ],
-          ),
-        ),
-
-        // Positioned(top: 40, left: 0, child: _backButton()),
-      ),
-    );
-  }
-}
-
-class BillScreen extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return BillScreenState();
-  }
-}
-
-class BillScreenState extends State<BillScreen> {
-  String _product;
-  String _quantity;
-  String _totalamount;
-  String _tax;
-  String _rate;
-  String _subtotal;
-  // String _calories;
-
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  Widget _title() {
-    return RichText(
-      textAlign: TextAlign.center,
-      text: TextSpan(
-          text: 'Add ',
-          style: GoogleFonts.portLligatSans(
-            textStyle: Theme.of(context).textTheme.display1,
-            fontSize: 30,
-            fontWeight: FontWeight.w700,
-            color: Colors.white,
-          ),
-          children: [
-            TextSpan(
-              text: 'Line ',
-              style: TextStyle(color: Colors.white, fontSize: 30),
-            ),
-            TextSpan(
-              text: 'Item',
-              style: TextStyle(color: Colors.white, fontSize: 30),
-            ),
-          ]),
-    );
-  }
-
-  Widget _buildproduct() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Product/Service Name'),
-      //maxLength: 10,
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'Required';
-        }
-
-        return null;
-      },
-      onSaved: (String value) {
-        _product = value;
-      },
-    );
-  }
-
-  Widget _buildquantity() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Quantity'),
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'Required';
-        }
-
-        // if (!RegExp(
-        //     r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
-        //   .hasMatch(value)) {
-        //  return 'Please enter a valid email Address';
-        //    }
-
-        return null;
-      },
-      onSaved: (String value) {
-        _quantity = value;
-      },
-    );
-  }
-
-  //ADD THE INVOICE WORK
-  Widget _backButton() {
-    return InkWell(
-      onTap: () {
-        Navigator.pop(context);
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Row(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
-              child: Icon(Icons.keyboard_arrow_left, color: Colors.black),
-            ),
-            Text('Back',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500))
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildtotalamount() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'ToTal Amt'),
-      //maxLength: 10,
-      //Padding:(),
-
-      validator: (String value) {
-        if (value.isEmpty) {
-          // return ' Required';
-        }
-
-        return null;
-      },
-      onSaved: (String value) {
-        _totalamount = value;
-      },
-    );
-  }
-
-  Widget _buildsubtotal() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Subtotal(Rate*Qty)'),
-      //maxLength: 10,
-      //Padding:(),
-
-      validator: (String value) {
-        if (value.isEmpty) {
-          // return ' Required';
-        }
-
-        return null;
-      },
-      onSaved: (String value) {
-        _subtotal = value;
-      },
-    );
-  }
-
-  Widget _buildtax() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Tax%'),
-
-      //maxLength: 10,
-      //Padding:(),
-
-      validator: (String value) {
-        if (value.isEmpty) {
-          // return ' Required';
-        }
-
-        return null;
-      },
-      onSaved: (String value) {
-        _tax = value;
-      },
-    );
-  }
-
-  Widget _buildrate() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Rate(Price/Unit)'),
-      keyboardType: TextInputType.phone,
-      validator: (String value) {
-        if (value.isEmpty) {
-          //return 'Required';
-
-        }
-
-        return null;
-      },
-      onSaved: (String value) {
-        _rate = value;
-      },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                    color: Colors.grey.shade200,
-                    offset: Offset(2, 4),
-                    blurRadius: 5,
-                    spreadRadius: 2)
-              ],
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Color(0xfffbb448), Color(0xffe46b10)])),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              _backButton(),
-              _title(),
-
-              SizedBox(
-                height: 1,
-              ),
-              _buildproduct(),
-              SizedBox(
-                height: 1,
-              ),
-              _buildquantity(),
-              SizedBox(
-                height: 10,
-              ),
-              _buildrate(),
-              SizedBox(
-                height: 1,
-              ),
-              _buildsubtotal(),
-              SizedBox(
-                height: 1,
-              ),
-              _buildtax(),
-              SizedBox(
-                height: 1,
-              ),
-              _buildtotalamount(),
-
-              // _backButton(),
-
-              SizedBox(height: 100),
-              RaisedButton(
-                  child: Text(
-                    'SAVE',
-                    style: TextStyle(color: Colors.blue, fontSize: 16),
+                  SizedBox(
+                    width: 30.0,
                   ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                PurchaseScreen()));
+                  SizedBox(
+                    height: 100.0,
+                    width: 150.0,
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: "Bill No.",
+                        fillColor: Colors.black,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                          borderSide: BorderSide(),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value.length == 0) {
+                          return "Cannot be Empty";
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              ButtonTheme(
+                minWidth: double.infinity,
+                height: 50.0,
+                child: RaisedButton(
+                  onPressed: () {},
+                  color: Colors.blueAccent.shade100,
+                  child: Text("ADD ITEMS(OPTIONAL)"),
+                ),
+              ),
+              TextFormField(
+                controller: controller,
+                decoration: InputDecoration(
+                  labelText: 'Total Amt ',
+                ),
+                validator: (value) => value.isEmpty ? "Can't be empty" : null,
+                onSaved: (value) => _amount = value as double,
+              ),
+              TextFormField(
+                controller: controller,
+                decoration: InputDecoration(
+                  labelText: "Received Amt",
+                ),
+                //validator: (value) => value.isEmpty?"Can't be empty":null,
+                onSaved: (value) => _rAmount = value as double,
+              ),
+              TextFormField(
+                controller: controller,
+                decoration: InputDecoration(
+                  labelText: "Balance Due",
+                  hintText: "$_amt",
+                ),
+              ),
+              Row(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
+                    child: DropdownButton<String>(
+                      value: dropdownValue,
+                      icon: Icon(Icons.arrow_downward),
+                      iconSize: 24,
+                      elevation: 16,
+                      style: TextStyle(color: Colors.black),
+                      underline: Container(
+                        height: 2,
+                        color: Colors.black,
+                      ),
+                      onChanged: (String newValue) {
+                        setState(() {
+                          dropdownValue = newValue;
+                        });
+                      },
+                      items: <String>['Cash', 'Cheque']
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  FlatButton(
+                      color: Colors.blue.shade100,
+                      onPressed: () {
+                        setState(() {
+                          TextFormField(
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              labelText: "Description*",
+                              fillColor: Colors.black,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                                borderSide: BorderSide(),
+                              ),
+                            ),
+                            validator: (value) {
+                              if (value.length == 0) {
+                                return "Cannot be Empty";
+                              } else {
+                                return null;
+                              }
+                            },
+                          );
+                        });
+                      },
+                      child: Row(
+                        children: <Widget>[
+                          Icon(
+                            Icons.note_add,
+                            color: Colors.blue.shade700,
+                          ),
+                          Text(
+                            " Add Description ",
+                            style: TextStyle(color: Colors.blue.shade700),
+                          )
+                        ],
+                      )),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 130.0),
+                    child: Icon(
+                      Icons.add_a_photo,
+                      size: 35.0,
+                    ),
+                  ),
+                ],
+              ),
 
-                    _formKey.currentState.save();
+              SizedBox(
+                height: 50.0,
+              ),
 
-                    print(_product);
-                    print(_quantity);
-                    print(_rate);
-                  })
+//
+//              SizedBox(
+//                  width: double.infinity,
+//                  height: 40.0 ,
+
+              ButtonTheme(
+                  child: RaisedButton(
+                elevation: 20.0,
+                onPressed: null,
+                child: Text(
+                  " Save",
+                  style: TextStyle(color: Colors.blue.shade700),
+                ),
+                color: Colors.blue.shade100,
+                splashColor: Colors.red,
+              ))
             ],
           ),
         ),
-
-        // Positioned(top: 40, left: 0, child: _backButton()),
       ),
     );
   }
 }
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*class MyStatefulWidget extends StatefulWidget {
-  MyStatefulWidget({Key key}) : super(key: key);
-
-  @override
-  _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
-}
-
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  String dropdownValue = 'Cash(payment type)';
-}*/

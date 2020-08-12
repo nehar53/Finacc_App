@@ -1,4 +1,6 @@
 import 'package:finacc/UI/forlogin/Welcomepage.dart';
+import 'package:finacc/UI/forpartyform/listscreen.dart';
+//import 'package:finacc/UI/forpartyform/api.dart';
 import 'package:finacc/UI/forpartyform/party_screen.dart';
 
 import 'package:finacc/UI/forpurchase/purchase_order.dart';
@@ -494,7 +496,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (BuildContext context) => DebitNote()));
+                        builder: (BuildContext context) => PurchaseOrder()));
               },
             ),
             /*  ListTile(

@@ -298,54 +298,6 @@ class SaleScreenState extends State<SaleScreen> {
     );
   }
 
-  /* @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: AppBar(title: Text("Form Demo")),
-      body: Container(
-        
-        margin: EdgeInsets.all(24),
-        
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              _title(),
-              _buildparty(),
-              _buildinvoicedate(),
-              SizedBox(
-                height: 5,
-              ),
-              _submitButton(),
-
-              //_buildinvoicedate(),
-              SizedBox(height: 300),
-              RaisedButton(
-                child: Text(
-                  'SAVE',
-                  style: TextStyle(color: Colors.blue, fontSize: 16),
-                ),
-                onPressed: () {
-                  if (!_formKey.currentState.validate()) {
-                    return;
-                  }
-
-                  _formKey.currentState.save();
-
-                  print(_billdate);
-                  print(_party);
-
-                  //Send to API
-                },
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}*/
   @override
   Widget build(BuildContext context) {
     return Scaffold(

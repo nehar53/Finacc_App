@@ -1,6 +1,7 @@
-//import 'package:finacc/UI/forpartyform/tab.dart';
 import 'dart:convert';
 
+import 'package:finacc/UI/forpartyform/model.dart';
+import 'package:finacc/UI/forpartyform/listscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,41 +16,33 @@ class FormScreen extends StatefulWidget {
 }
 
 class FormScreenState extends State<FormScreen> {
-  Future<void> getApiResults() async {
-    var url = "http://164.52.197.189:8181/fdb/finacc/gendata/query";
-    Map<String, dynamic> tempMap = {
-      "select": ["*"],
-      "from": "partyMst"
+  submitApiReq() async {
+    // var res = _selectedGST.split(" ");
+    //print(res.last);
+
+    var url = "http://164.52.197.189:8181/fdb/finacc/gendata/transact";
+
+    Map<String, dynamic> postReq = {
+      "_id": "partyMst",
+      "partyMobileNo": _buildPhoneNumber(),
+      "partyName": _buildName(),
+      "partyType": partyType.text,
+      "partyEmail": _buildEmail(),
+      "partyBillingAddress": partyBillingAddress.text,
+      "partyGSTTYpe": partyGSTTYpe.text,
+      "partyState": partyState.text,
+      "partyStateCode": partyStateCode.text,
+      "partyOpeningBalance": int.parse(partyOpeningBalance.text),
+      "partyGSTINNo": partyGSTINNo.text,
+      "openingBalAsOn": int.parse(openingBalAsOn.text)
     };
-    var query = json.encode(tempMap);
-    var resp = await http.post(url, body: query);
-    var res = json.decode(resp.body.toString());
-    for (var Party in res) {
-      var newParty = Party();
+    var abc = [postReq];
 
-      newParty.partyMobileNo = Party["PartyMst/partyMobileNo"].toInt();
+    var repost = json.encode(abc);
+    var resp = await http.post(url, body: repost);
+    print(json.decode(resp.body.toString()));
 
-      newParty.partyName = Party["PartyMst/partyName"].toString();
-      newParty.partyType = Party["PartyMst/partyType"].toString();
-      // newParty.partyName = Party["PartyMst/partyName"].toString();
-      newParty.partyEmail = Party["PartyMst/ partyEmail"].toString();
-      newParty.partyBillingAddress =
-          Party["PartyMst/partyBillingAddress"].toString();
-      newParty.partyState = Party["PartyMst/ partyState"].toString();
-      newParty.partyGSTTYpe = Party["PartyMst/ partyGSTTYpe"].toString();
-
-      newParty.partyMobileNo = Party["PartyMst/partyMobileNo"].toInt();
-      newParty.partyStateCode = Party["PartyMst/partyStateCode"].toInt();
-      newParty.partyOpeningBalance =
-          Party["PartyMst/partyOpeningBalance"].toInt();
-      newParty.openingBalAsOn = Party["PartyMst/openingBalAsOn"].toInt();
-      newParty.id = Party["PartyMst/_id"];
-      newParty.partyGSTINNo = Party["PartyMst/partyGSTINNo"].toInt();
-      newParty.partyOpeningBalance =
-          Party["PartyMst/partyOpeningBalance"].toInt();
-
-      //new.add(newParty);
-    }
+    setState(() {});
   }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -60,6 +53,7 @@ class FormScreenState extends State<FormScreen> {
 
   Widget _buildName() {
     return TextFormField(
+      controller: partyName,
       decoration: InputDecoration(labelText: 'Name'),
       //maxLength: 10,
       validator: (String value) {
@@ -77,6 +71,7 @@ class FormScreenState extends State<FormScreen> {
 
   Widget _buildEmail() {
     return TextFormField(
+      controller: partyEmail,
       decoration: InputDecoration(labelText: 'Email'),
       validator: (String value) {
         if (value.isEmpty) {
@@ -99,6 +94,7 @@ class FormScreenState extends State<FormScreen> {
 
   Widget _buildPhoneNumber() {
     return TextFormField(
+      controller: partyMobileNo,
       decoration: InputDecoration(labelText: 'Phone number'),
       keyboardType: TextInputType.phone,
       validator: (String value) {
@@ -120,7 +116,7 @@ class FormScreenState extends State<FormScreen> {
       text: TextSpan(
           text: 'Add',
           style: GoogleFonts.portLligatSans(
-            textStyle: Theme.of(context).textTheme.display1,
+            // textStyle: Theme.of(context).textTheme.display1,
             fontSize: 25,
             fontWeight: FontWeight.w700,
             color: Colors.white,
@@ -138,25 +134,11 @@ class FormScreenState extends State<FormScreen> {
     );
   }
 
-  Widget _backButton() {
-    return InkWell(
-      onTap: () {
-        Navigator.pop(context);
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Row(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
-              child: Icon(Icons.keyboard_arrow_left, color: Colors.black),
-            ),
-            Text('Back',
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500))
-          ],
-        ),
-      ),
-    );
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    submitApiReq();
   }
 
   @override
@@ -172,11 +154,22 @@ class FormScreenState extends State<FormScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              // _backButton(),
-              // _title(),
               _buildName(),
+              SizedBox(
+                height: 22,
+              ),
+              /*  _party == null
+                  ? Container()
+                  : Text(
+                      "The user ${_party.partyName},${_party.id} is created succesfully at time "),*/
               _buildEmail(),
+              SizedBox(
+                height: 22,
+              ),
               _buildPhoneNumber(),
+              SizedBox(
+                height: 22,
+              ),
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(25.0),
@@ -192,19 +185,34 @@ class FormScreenState extends State<FormScreen> {
                 ),
               ),
               RaisedButton(
-                  child: Text(
-                    'SAVE',
-                    style: TextStyle(color: Colors.deepOrange, fontSize: 16),
-                  ),
-                  onPressed: getApiResults
+                child: Text(
+                  'SAVE',
+                  style: TextStyle(color: Colors.deepOrange, fontSize: 16),
+                ),
+                onPressed: () async {
+                  //final String name = nameController.text;
+                  //final String email = jobController.text;
+                  //final Party party = await submitapiresult(name, email);
+                  // PartyList();
+                  //setState(() {
+                  // _party = party;
+                  //  });
 
-                  /*  print(_name);
+                  Navigator.of(context).pop();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => HomePage1()));
+                  // submitApiReq();
+                },
+
+                /*  print(_name);
                   print(_email);
                   print(_phoneNumber);
                   print(NestedTabBar);*/
 
-                  //Send to API
-                  )
+                //Send to API
+              ),
             ],
           ),
         ),
@@ -213,38 +221,17 @@ class FormScreenState extends State<FormScreen> {
   }
 }
 
-class Party {
-  String partyName,
-      partyType,
-      partyEmail,
-      partyBillingAddress,
-      partyGSTTYpe,
-      id,
-      partyState;
-  int partyMobileNo,
-      partyStateCode,
-      partyOpeningBalance,
-      partyGSTINNo,
-      openingBalAsOn;
-
-  Party({
-    this.partyMobileNo,
-    this.partyName,
-    this.partyType,
-    this.partyEmail,
-    this.partyBillingAddress,
-    this.partyGSTTYpe,
-    this.partyState,
-    this.partyStateCode,
-    this.partyOpeningBalance,
-    //this.openingBalAsOn,
-    this.id,
-    this.partyGSTINNo,
-    //this.partyOpeningBalance,
-    this.openingBalAsOn,
-    //  this.salesTaxIncluded
-  });
-}
+final TextEditingController partyName = TextEditingController();
+final TextEditingController partyEmail = TextEditingController();
+final TextEditingController partyMobileNo = TextEditingController();
+final TextEditingController partyType = TextEditingController();
+final TextEditingController partyBillingAddress = TextEditingController();
+final TextEditingController partyGSTTYpe = TextEditingController();
+final TextEditingController partyState = TextEditingController();
+final TextEditingController partyStateCode = TextEditingController();
+final TextEditingController partyOpeningBalance = TextEditingController();
+final TextEditingController partyGSTINNo = TextEditingController();
+final TextEditingController openingBalAsOn = TextEditingController();
 
 class NestedTabBar extends StatefulWidget {
   @override
